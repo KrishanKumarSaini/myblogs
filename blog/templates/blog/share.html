@@ -1,0 +1,30 @@
+{% extends 'blog/style.html' %}
+
+{% block content %}
+    <div>
+    {% if request.user.is_authenticated %}
+    <ul class="langs navbar-text"><a href="{% url 'profile' %}" class="active">{{ request.user.username }}</a><span>           </span><a href="{% url 'account_logout' %}" class="active">Logout</a></ul>
+    {% else %}
+    <ul class="langs navbar-text"><a href="{% url 'account_login' %}" class="active">Login</a><span>           </span><a href="{% url 'account_signup' %}" class="active">Sign Up</a></ul>
+    {% endif %}
+    </div>
+    <div class="container">
+        <header>
+          <h3 class="h6">Search the blog</h3>
+        </header>
+        <form action="{% url 'search' %}" class="search-form">
+          <div class="form-group">
+            <input type="text" name="search" placeholder="What are you looking for?">
+            <button type="submit" class="submit btn btn-primary"><i class="icon-search">search</i></button>
+          </div>
+        </form>
+    </div>
+    <br>
+            <p>Please, use the following form to share:</p>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" name="send" class="btn btn-primary">Send</button>
+            </form>
+    </div>
+{% endblock%}

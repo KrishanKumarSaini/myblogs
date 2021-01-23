@@ -1,0 +1,34 @@
+{% load blog_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Blogs</title>
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+</head>
+<body>
+    {% block content %}
+    
+    {% endblock%}
+    <div id="sidebar">
+    <h2>WELCOME</h2>
+    <p>Total <strong>{% total_posts %}</strong> posts have been written so far.</p>
+    <h3>Latest Posts</h3>
+    {% show_latest_posts 3 %}
+    <b><h3>Most Commented Posts</h3></b>
+    {% get_most_commented_posts as most_commented_posts %}
+    <ul>
+        {% for post in most_commented_posts %}
+        <li>
+            <a href="/blog/?id={{post.id}}">{{post.title}}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    </div>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>

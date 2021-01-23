@@ -1,0 +1,35 @@
+{% extends 'blog/style.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <div>
+    <ul><a href="{% url 'home' %}">form</a></ul>
+    {% if request.user.is_authenticated %}
+    <ul class="langs navbar-text"><a href="{% url 'profile' %}" class="active">{{ request.user.username }}</a><span>           </span><a href="{% url 'account_logout' %}" class="active">Logout</a></ul>
+    {% else %}
+    <ul class="langs navbar-text"><a href="{% url 'account_login' %}" class="active">Login</a><span>           </span><a href="{% url 'account_signup' %}" class="active">Sign Up</a></ul>
+    {% endif %}
+  </div>
+    <div class="container">
+        <header>
+          <h3 class="h6">Search the blog</h3>
+        </header>
+        <form action="{% url 'search' %}" class="search-form">
+          <div class="form-group">
+            <input type="text" name="search" placeholder="What are you looking for?">
+            <button type="submit" class="btn btn-primary"><i class="icon-search">Search</i></button>
+          </div>
+        </form>
+    </div>
+    <br>
+    <p>Author:-{{post.author}}</p>
+    <b><h2>Update Post</h2></b>
+    <br>
+    <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+    <br>
+    <br>
+{% endblock %}

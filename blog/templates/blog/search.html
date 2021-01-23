@@ -1,0 +1,44 @@
+<html>
+  <body>
+    <a href="{% url 'posts' %}">all posts</a>
+    <a href="{% url 'home' %}">form</a>
+    <div class="container">
+      <header>
+        <h3 class="h6">Search the blog</h3>
+      </header>
+      <form action="{% url 'search' %}" class="search-form">
+        <div class="form-group">
+          <input type="text" name="search" placeholder="What are you looking for?">
+            <button type="submit" class="submit"><i class="icon-search">Search</i></button>
+        </div>
+      </form>
+    </div>
+    
+    {% for post in posts %}
+      <div class="container">
+        <a href="/blog/?id={{post.id}}" style="text-decoration: none;"><h1><b>{{ post.title }}</b></h1></a>
+          <div><img src="{{post.thumbnail.url}}" style="width:50%;height:50%;border: solid 2px;">
+          </div>
+          <div>
+            Tags:
+            {% for tag in post.tags.all %}
+              <a href="{% url 'posts_by_tag' tag.slug %}">
+                {{ tag.name }}
+              </a>
+            {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+          </div>
+          <h5>{{ post.author }}</h5>
+            <p class="text-muted">{{post.created|timesince}} ago</p>
+            <p>{{ post.content }}</p>
+            <div class="form-group">
+              <p>Share This Post:-</p>
+              <a href="{% url 'share' id=post.id %}">Share</a>
+            </div>
+            <hr>
+            <br>
+      </div>
+    {% endfor %}
+    </div>
+  </body>
+</html>

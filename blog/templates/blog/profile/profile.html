@@ -1,0 +1,40 @@
+{% extends 'blog/style.html' %}
+
+{% block content %}
+        <h1>Hello <i>{{request.user}}</i></h1>
+        <a href="{% url 'home' %}">form</a>     <a href="{% url 'posts' %}">allposts</a>
+        {% if request.user.is_authenticated %}
+        <ul class="langs navbar-text"><a href="{% url 'profile' %}" class="active">{{ request.user }}</a><span>           </span><a href="{% url 'account_logout' %}" class="active">Logout</a></ul>
+        {% else %}
+        <ul class="langs navbar-text"><a href="{% url 'account_login' %}" class="active">Login</a><span>           </span><a href="{% url 'account_signup' %}" class="active">Sign Up</a></ul>
+        {% endif %}
+
+    <div class="container">
+        <header>
+          <h3 class="h6">Search the blog</h3>
+        </header>
+        <form action="{% url 'search' %}" class="search-form">
+          <div class="form-group">
+            <input type="text" name="search" placeholder="What are you looking for?">
+            <button type="submit" class="btn btn-primary">search<i class="icon-search"></i></button>
+          </div>
+        </form>
+    </div>
+    <br>
+    {% for post in posts %}
+    <div class="container">
+      <a href="/blog/?id={{post.id}}"><h1><b>{{ post.title }}</b></h1></a>
+          <div><img src="{{post.thumbnail.url}}" style="width:50%;height:50%;border: solid 2px;">
+          </div>
+          <h5>{{ post.author }}</h5>
+          <p>{{post.created}}</p>
+          <p>{{ post.content }}</p>
+            <div class="form-group">
+              <p>Share This Post:-</p>
+              <a href="{% url 'share' id=post.id %}">Share</a>
+            </div>
+            <hr>
+            <br>
+    </div>
+    {% endfor %}
+{% endblock%}

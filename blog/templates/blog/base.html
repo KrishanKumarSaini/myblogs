@@ -1,0 +1,16 @@
+{% extends 'blog/style.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+        <a href="{% url 'posts' %}">all posts</a>
+        <h2>Create Post</h2>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <br>
+            <button type="submit" class="btn btn-primary">send</button> 
+        </form>
+    <br>
+    <br>
+{% endblock%}
